@@ -79,6 +79,15 @@
    php artisan migrate
    php artisan db:seed
    ```
+   
+   > 📝 **Catatan**: Seeder akan membuat data dummy lengkap:
+   > - 1 Admin user
+   > - 6 Kategori produk
+   > - 5 Seller (4 verified, 1 pending)
+   > - 13 Produk dengan berbagai stok
+   > - 10 Review produk
+   >
+   > **Lihat file `DATABASE_SETUP.md` untuk detail lengkap!**
 
 6. **Build Assets**
    ```bash
