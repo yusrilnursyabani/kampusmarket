@@ -28,6 +28,9 @@
                     <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-blue-600 transition">
                         <i class="fas fa-home"></i> Beranda
                     </a>
+                    <a href="{{ route('seller.register') }}" class="text-white bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-2 rounded-lg hover:from-amber-600 hover:to-orange-700 transition font-semibold">
+                        <i class="fas fa-user-plus"></i> Daftar Seller
+                    </a>
                     <a href="{{ url('/admin') }}" class="text-gray-700 hover:text-blue-600 transition">
                         <i class="fas fa-user-shield"></i> Admin
                     </a>

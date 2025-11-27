@@ -60,6 +60,10 @@ class Login extends BaseLogin
     public function authenticate(): ?\Filament\Http\Responses\Auth\Contracts\LoginResponse
     {
         try {
+            // Hapus session lama dan regenerate token
+            session()->invalidate();
+            session()->regenerateToken();
+            
             $data = $this->form->getState();
 
             // Coba authenticate dengan email_pic
@@ -75,6 +79,7 @@ class Login extends BaseLogin
             // Cek apakah seller sudah diverifikasi
             if ($seller->status_verifikasi !== 'diterima') {
                 \Illuminate\Support\Facades\Auth::guard('seller')->logout();
+                session()->regenerate();
                 
                 throw ValidationException::withMessages([
                     'data.email_pic' => 'Akun Anda belum diverifikasi oleh Admin.',
@@ -84,12 +89,14 @@ class Login extends BaseLogin
             // Cek apakah seller aktif
             if (!$seller->is_active) {
                 \Illuminate\Support\Facades\Auth::guard('seller')->logout();
+                session()->regenerate();
                 
                 throw ValidationException::withMessages([
                     'data.email_pic' => 'Akun Anda tidak aktif. Silakan hubungi Admin.',
                 ]);
             }
 
+            // Regenerate session untuk keamanan
             session()->regenerate();
 
             return app(\Filament\Http\Responses\Auth\Contracts\LoginResponse::class);
