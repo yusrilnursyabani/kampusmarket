@@ -16,6 +16,8 @@ class ProductReview extends Model
         'nama_pengunjung',
         'email_pengunjung',
         'no_hp_pengunjung',
+        'provinsi_pengunjung',
+        'kota_pengunjung',
         'isi_komentar',
         'rating',
         'is_approved',

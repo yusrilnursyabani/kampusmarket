@@ -24,6 +24,11 @@ class StatsOverview extends BaseWidget
                 ->description('Sudah diverifikasi & aktif')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->color('success'),
+
+            Stat::make('Penjual Tidak Aktif', Seller::where('status_verifikasi', 'diterima')->where('is_active', false)->count())
+                ->description('Perlu diaktifkan kembali')
+                ->descriptionIcon('heroicon-m-x-circle')
+                ->color('danger'),
             
             Stat::make('Menunggu Verifikasi', Seller::where('status_verifikasi', 'menunggu')->count())
                 ->description('Perlu ditinjau')
@@ -46,6 +51,11 @@ class StatsOverview extends BaseWidget
                 ->descriptionIcon('heroicon-m-star')
                 ->color('warning')
                 ->chart([10, 25, 40, 55, 70, 85, 100]),
+
+            Stat::make('Pengunjung Memberi Review', ProductReview::where('is_approved', true)->distinct('email_pengunjung')->count('email_pengunjung'))
+                ->description('Jumlah pengunjung unik')
+                ->descriptionIcon('heroicon-m-users')
+                ->color('info'),
         ];
     }
 }

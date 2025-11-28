@@ -44,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Widgets\StatsOverview::class,
                 \App\Filament\Widgets\ProductsByCategoryChart::class,
                 \App\Filament\Widgets\SellersByProvinceChart::class,
+                \App\Filament\Widgets\ReviewSubmissionsChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

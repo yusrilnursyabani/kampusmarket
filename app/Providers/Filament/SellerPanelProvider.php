@@ -46,6 +46,7 @@ class SellerPanelProvider extends PanelProvider
                 \App\Filament\Seller\Widgets\SellerStatsOverview::class,
                 \App\Filament\Seller\Widgets\ProductStockChart::class,
                 \App\Filament\Seller\Widgets\ProductRatingChart::class,
+                \App\Filament\Seller\Widgets\ReviewerProvinceChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

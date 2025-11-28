@@ -71,7 +71,8 @@ class SellerResource extends Resource
                         Forms\Components\TextInput::make('nama_pic')
                             ->label('Nama PIC')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(15)
+                            ->rules(['regex:/^[A-Za-z\\s]+$/']),
                         
                         Forms\Components\TextInput::make('email_pic')
                             ->label('Email PIC')
@@ -84,7 +85,17 @@ class SellerResource extends Resource
                             ->label('No. HP PIC')
                             ->tel()
                             ->required()
-                            ->maxLength(20),
+                            ->maxLength(12)
+                            ->rules(['digits_between:11,12', 'regex:/^[0-9]+$/'])
+                            ->helperText('11-12 digit angka tanpa spasi.'),
+                        
+                        Forms\Components\TextInput::make('nomor_ktp')
+                            ->label('Nomor KTP')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(16)
+                            ->rules(['regex:/^[0-9]{16}$/'])
+                            ->helperText('16 digit sesuai NIK e-KTP'),
                         
                         Forms\Components\TextInput::make('password')
                             ->label('Password')
@@ -101,22 +112,74 @@ class SellerResource extends Resource
                         Forms\Components\TextInput::make('provinsi')
                             ->label('Provinsi')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(50)
+                            ->rules(['regex:/^[A-Za-z\\s]+$/']),
                         
                         Forms\Components\TextInput::make('kota_kabupaten')
                             ->label('Kota/Kabupaten')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(50)
+                            ->rules(['regex:/^[A-Za-z\\s]+$/']),
+                        
+                        Forms\Components\TextInput::make('kelurahan')
+                            ->label('Kelurahan')
+                            ->required()
+                            ->maxLength(50)
+                            ->rules(['regex:/^[A-Za-z\\s]+$/']),
+                        
+                        Forms\Components\TextInput::make('kecamatan')
+                            ->label('Kecamatan')
+                            ->required()
+                            ->maxLength(50)
+                            ->rules(['regex:/^[A-Za-z\\s]+$/']),
                         
                         Forms\Components\Textarea::make('alamat_lengkap')
                             ->label('Alamat Lengkap')
                             ->required()
-                            ->rows(3)
+                            ->maxLength(100)
+                            ->rows(2)
                             ->columnSpanFull(),
+                        
+                        Forms\Components\TextInput::make('rt')
+                            ->label('RT')
+                            ->required()
+                            ->maxLength(3)
+                            ->rules(['regex:/^[0-9]+$/'])
+                            ->helperText('Maksimal 3 digit.'),
+                        
+                        Forms\Components\TextInput::make('rw')
+                            ->label('RW')
+                            ->required()
+                            ->maxLength(3)
+                            ->rules(['regex:/^[0-9]+$/'])
+                            ->helperText('Maksimal 3 digit.'),
                         
                         Forms\Components\TextInput::make('kode_pos')
                             ->label('Kode Pos')
                             ->maxLength(10),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Dokumen Penanggung Jawab')
+                    ->schema([
+                        Forms\Components\FileUpload::make('foto_seller')
+                            ->label('Foto Seller')
+                            ->directory('sellers/foto')
+                            ->disk('public')
+                            ->image()
+                            ->required(fn ($context) => $context === 'create')
+                            ->acceptedFileTypes(['image/jpeg'])
+                            ->maxSize(2048)
+                            ->helperText('Format JPG/JPEG, maks 2MB.'),
+
+                        Forms\Components\FileUpload::make('foto_ktp')
+                            ->label('Foto KTP Seller')
+                            ->directory('sellers/ktp')
+                            ->disk('public')
+                            ->image()
+                            ->required(fn ($context) => $context === 'create')
+                            ->acceptedFileTypes(['image/jpeg'])
+                            ->maxSize(2048),
                     ])
                     ->columns(2),
 
@@ -168,6 +231,10 @@ class SellerResource extends Resource
                     ->label('PIC')
                     ->searchable()
                     ->description(fn ($record) => $record->email_pic),
+                
+                Tables\Columns\TextColumn::make('nomor_ktp')
+                    ->label('Nomor KTP')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 
                 Tables\Columns\TextColumn::make('full_location')
                     ->label('Lokasi')

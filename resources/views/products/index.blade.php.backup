@@ -1,0 +1,241 @@
+@extends('layouts.app')
+
+@section('title', 'Katalog Produk - KampusMarket')
+
+@section('content')
+<!-- Hero Section - Compact -->
+<div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white py-8 mb-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">Katalog Produk</h1>
+        <p class="text-amber-50">Temukan berbagai produk dari toko-toko kampus di seluruh Indonesia</p>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 pb-12">
+
+    <!-- Filter & Search Form -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-100 mb-8 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-4">
+            <h3 class="text-white font-semibold flex items-center">
+                <i class="fas fa-filter mr-2"></i> Filter & Pencarian
+            </h3>
+        </div>
+        
+        <!-- Form -->
+        <form method="GET" action="{{ route('products.index') }}" class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-4">
+                <!-- Search Produk -->
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-search text-orange-500 mr-1"></i> Cari Produk
+                    </label>
+                    <input type="text" name="search" value="{{ request('search') }}" 
+                        placeholder="Masukkan nama produk..." 
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                </div>
+
+                <!-- Nama Toko -->
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-store text-orange-500 mr-1"></i> Nama Toko
+                    </label>
+                    <input type="text" name="seller" value="{{ request('seller') }}"
+                        placeholder="Contoh: Elektronik Jaya"
+                        list="seller-options"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                    <datalist id="seller-options">
+                        @foreach($sellerNames as $sellerName)
+                            <option value="{{ $sellerName }}"></option>
+                        @endforeach
+                    </datalist>
+                </div>
+
+                <!-- Kategori -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-tags text-orange-500 mr-1"></i> Kategori
+                    </label>
+                    <select name="category" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                        <option value="">Semua Kategori</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->nama_kategori }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Provinsi -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-map-marker-alt text-orange-500 mr-1"></i> Provinsi Toko
+                    </label>
+                    <select name="provinsi" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                        <option value="">Semua Provinsi</option>
+                        @foreach($provinces as $province)
+                            <option value="{{ $province }}" {{ request('provinsi') == $province ? 'selected' : '' }}>
+                                {{ $province }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Sorting -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-city text-orange-500 mr-1"></i> Kota/Kabupaten
+                    </label>
+                    <input type="text" name="kota" value="{{ request('kota') }}"
+                        placeholder="Nama kota atau kabupaten"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                </div>
+
+                <!-- Sorting -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-sort text-orange-500 mr-1"></i> Urutkan
+                    </label>
+                    <select name="sort" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition">
+                        <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
+                        <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Terpopuler</option>
+                        <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Harga Terendah</option>
+                        <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Harga Tertinggi</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end mt-4">
+                <button type="submit" class="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-lg shadow hover:from-orange-600 hover:to-amber-600 transition">
+                    <i class="fas fa-search mr-2"></i> Terapkan Filter
+                </button>
+                <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center px-6 py-2.5 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition">
+                    <i class="fas fa-undo mr-2"></i> Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Result Info -->
+    @if($products->count() > 0)
+        <div class="mb-6 flex items-center justify-between">
+            <p class="text-gray-600">
+                Menampilkan <span class="font-semibold text-gray-800">{{ $products->firstItem() }}-{{ $products->lastItem() }}</span> 
+                dari <span class="font-semibold text-gray-800">{{ $products->total() }}</span> produk
+            </p>
+        </div>
+    @endif
+
+    <!-- Products Grid -->
+    @if($products->count() > 0)
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+            @foreach($products as $product)
+                <div class="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                    <!-- Product Image -->
+                    <a href="{{ route('products.show', $product->slug) }}" class="block relative overflow-hidden">
+                        @if($product->gambar_utama)
+                            <img src="{{ Storage::url($product->gambar_utama) }}" alt="{{ $product->nama_produk }}" 
+                                class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                        @else
+                            <div class="w-full h-56 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                <i class="fas fa-image text-gray-400 text-5xl"></i>
+                            </div>
+                        @endif
+                        
+                        <!-- Stock Badge -->
+                        @if($product->stok == 0)
+                            <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                                <span class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold">
+                                    <i class="fas fa-times-circle"></i> Stok Habis
+                                </span>
+                            </div>
+                        @elseif($product->stok < 10)
+                            <div class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                                <i class="fas fa-fire"></i> Stok Terbatas!
+                            </div>
+                        @endif
+                        
+                        <!-- Category Badge -->
+                        <div class="absolute top-3 right-3 bg-white bg-opacity-90 px-3 py-1 rounded-full text-xs font-semibold text-gray-700 shadow">
+                            {{ $product->category->nama_kategori }}
+                        </div>
+                    </a>
+
+                    <!-- Product Info -->
+                    <div class="p-4">
+                        <a href="{{ route('products.show', $product->slug) }}">
+                            <h3 class="font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition line-clamp-2 min-h-[3rem] text-lg">
+                                {{ $product->nama_produk }}
+                            </h3>
+                        </a>
+
+                        <!-- Price -->
+                        <div class="text-2xl font-bold text-orange-600 mb-3">
+                            {{ $product->formatted_price }}
+                        </div>
+
+                        <!-- Rating & Stock Info -->
+                        <div class="flex items-center justify-between mb-3 pb-3 border-b border-gray-100">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400 text-sm">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= floor($product->average_rating))
+                                            <i class="fas fa-star"></i>
+                                        @elseif($i - 0.5 <= $product->average_rating)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @else
+                                            <i class="far fa-star"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600 font-semibold">{{ number_format($product->average_rating, 1) }}</span>
+                                <span class="ml-1 text-xs text-gray-500">({{ $product->total_reviews }})</span>
+                            </div>
+                            <div class="text-sm {{ $product->stok > 10 ? 'text-green-600' : ($product->stok > 0 ? 'text-orange-600' : 'text-red-600') }} font-semibold">
+                                <i class="fas fa-box"></i> {{ $product->stok }}
+                            </div>
+                        </div>
+
+                        <!-- Seller Info -->
+                        <div>
+                            <div class="flex items-center text-sm text-gray-700 mb-1">
+                                <i class="fas fa-store text-orange-500 mr-2"></i>
+                                <span class="truncate font-medium">{{ $product->seller->nama_toko }}</span>
+                            </div>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-map-marker-alt text-orange-400 mr-2"></i>
+                                <span class="truncate">{{ $product->seller->kota_kabupaten }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center">
+            <div class="inline-flex rounded-lg shadow-md overflow-hidden">
+                {{ $products->appends(request()->query())->links('pagination::tailwind') }}
+            </div>
+        </div>
+    @else
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-16 text-center">
+            <div class="max-w-md mx-auto">
+                <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-100 to-amber-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-search text-orange-400 text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-3">Produk Tidak Ditemukan</h3>
+                <p class="text-gray-600 mb-6">Maaf, kami tidak dapat menemukan produk yang sesuai dengan pencarian Anda. Coba ubah filter atau kata kunci pencarian.</p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="{{ route('products.index') }}" class="px-8 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition shadow-md hover:shadow-lg">
+                        <i class="fas fa-th"></i> Lihat Semua Produk
+                    </a>
+                    <button onclick="window.history.back()" class="px-8 py-3 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
+@endsection

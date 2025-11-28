@@ -59,6 +59,16 @@ class ProductReviewResource extends Resource
                             ->tel()
                             ->required()
                             ->maxLength(20),
+
+                        Forms\Components\TextInput::make('provinsi_pengunjung')
+                            ->label('Provinsi Pengunjung')
+                            ->required()
+                            ->maxLength(100),
+                        
+                        Forms\Components\TextInput::make('kota_pengunjung')
+                            ->label('Kota / Kabupaten Pengunjung')
+                            ->required()
+                            ->maxLength(100),
                         
                         Forms\Components\TextInput::make('ip_address')
                             ->label('IP Address')
@@ -118,6 +128,12 @@ class ProductReviewResource extends Resource
                     ->label('Pengunjung')
                     ->searchable()
                     ->description(fn ($record) => $record->email_pengunjung),
+                
+                Tables\Columns\TextColumn::make('kota_pengunjung')
+                    ->label('Lokasi')
+                    ->icon('heroicon-o-map-pin')
+                    ->formatStateUsing(fn ($record) => collect([$record->kota_pengunjung, $record->provinsi_pengunjung])->filter()->implode(', '))
+                    ->toggleable(),
                 
                 Tables\Columns\TextColumn::make('rating')
                     ->label('Rating')

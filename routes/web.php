@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerRegistrationController;
+use App\Http\Controllers\AdminReportController;
 
-// Homepage redirect ke katalog produk
+// Homepage
 Route::get('/', function () {
-    return redirect()->route('products.index');
+    return view('welcome');
 });
 
 // Routes Frontend Publik (tanpa autentikasi)
@@ -20,4 +21,11 @@ Route::prefix('products')->name('products.')->group(function () {
 Route::prefix('seller')->name('seller.')->group(function () {
     Route::get('/register', [SellerRegistrationController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [SellerRegistrationController::class, 'register'])->name('register.submit');
+});
+
+// Admin PDF Reports (perlu login admin/web)
+Route::middleware(['auth'])->prefix('admin/reports')->name('admin.reports.')->group(function () {
+    Route::get('/seller-accounts', [AdminReportController::class, 'sellerAccounts'])->name('sellers');
+    Route::get('/stores-by-province', [AdminReportController::class, 'storesByProvince'])->name('stores');
+    Route::get('/product-ratings', [AdminReportController::class, 'productRatings'])->name('products');
 });

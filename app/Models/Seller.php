@@ -28,7 +28,14 @@ class Seller extends Authenticatable
         'provinsi',
         'kota_kabupaten',
         'alamat_lengkap',
+        'rt',
+        'rw',
+        'kelurahan',
+        'kecamatan',
         'kode_pos',
+        'nomor_ktp',
+        'foto_seller',
+        'foto_ktp',
         'status_verifikasi',
         'alasan_penolakan',
         'is_active',
@@ -91,7 +98,16 @@ class Seller extends Authenticatable
      */
     public function getAuthIdentifierName()
     {
-        return 'email_pic';
+        return 'id'; // Tetap gunakan 'id' untuk session storage
+    }
+
+    /**
+     * Override: Get auth identifier (ID untuk session)
+     * Return primary key (id) bukan email
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getKey(); // Return ID integer
     }
 
     /**

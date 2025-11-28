@@ -27,7 +27,7 @@
 
         <!-- Registration Form -->
         <div class="bg-white rounded-2xl shadow-xl p-8">
-            <form action="{{ route('seller.register.submit') }}" method="POST">
+            <form action="{{ route('seller.register.submit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Informasi Toko -->
@@ -93,9 +93,9 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 Nama Lengkap <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="nama_pic" value="{{ old('nama_pic') }}" 
+                            <input type="text" name="nama_pic" value="{{ old('nama_pic') }}" maxlength="15"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                   placeholder="Nama lengkap Anda" required>
+                                   placeholder="Maks. 15 karakter huruf" required pattern="[A-Za-z\s]+">
                             @error('nama_pic')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -120,10 +120,23 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 No HP / WhatsApp <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" name="no_hp_pic" value="{{ old('no_hp_pic') }}" 
+                            <input type="text" name="no_hp_pic" value="{{ old('no_hp_pic') }}" maxlength="12"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                   placeholder="08xxxxxxxxxx" required>
+                                   placeholder="11-12 digit angka" required pattern="[0-9]+">
                             @error('no_hp_pic')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Nomor KTP -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Nomor KTP Seller <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="nomor_ktp" value="{{ old('nomor_ktp') }}" maxlength="16"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                   placeholder="16 digit angka" required pattern="[0-9]+">
+                            @error('nomor_ktp')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -184,10 +197,36 @@
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">
                                     Kota/Kabupaten <span class="text-red-500">*</span>
                                 </label>
-                                <input type="text" name="kota_kabupaten" value="{{ old('kota_kabupaten') }}" 
+                                <input type="text" name="kota_kabupaten" value="{{ old('kota_kabupaten') }}" maxlength="50"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                       placeholder="Contoh: Jakarta Selatan" required>
+                                       placeholder="Contoh: Jakarta Selatan" required pattern="[A-Za-z\s]+">
                                 @error('kota_kabupaten')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Kelurahan & Kecamatan -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Kelurahan <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="kelurahan" value="{{ old('kelurahan') }}" maxlength="50"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                       placeholder="Nama kelurahan" required pattern="[A-Za-z\s]+">
+                                @error('kelurahan')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Kecamatan <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="kecamatan" value="{{ old('kecamatan') }}" maxlength="50"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                       placeholder="Nama kecamatan" required pattern="[A-Za-z\s]+">
+                                @error('kecamatan')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -196,14 +235,40 @@
                         <!-- Alamat Lengkap -->
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Alamat Lengkap <span class="text-red-500">*</span>
+                                Alamat (Nama Jalan) <span class="text-red-500">*</span>
                             </label>
-                            <textarea name="alamat_lengkap" rows="3" 
+                            <textarea name="alamat_lengkap" rows="2" maxlength="100"
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                      placeholder="Jalan, nomor, RT/RW, Kelurahan, Kecamatan..." required>{{ old('alamat_lengkap') }}</textarea>
+                                      placeholder="Nama jalan & nomor rumah" required>{{ old('alamat_lengkap') }}</textarea>
                             @error('alamat_lengkap')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <!-- RT / RW -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    RT <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="rt" value="{{ old('rt') }}" maxlength="3"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                       placeholder="Contoh: 007" required pattern="[0-9]+">
+                                @error('rt')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    RW <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="rw" value="{{ old('rw') }}" maxlength="3"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                       placeholder="Contoh: 002" required pattern="[0-9]+">
+                                @error('rw')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
 
                         <!-- Kode Pos -->
@@ -215,6 +280,41 @@
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                                    placeholder="Contoh: 12345">
                             @error('kode_pos')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumen Identitas -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-id-card text-amber-600 mr-2"></i>
+                        Dokumen Penanggung Jawab
+                    </h2>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Foto Seller (JPG/JPEG) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="file" name="foto_seller" accept="image/jpeg"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                   required>
+                            <p class="text-gray-500 text-xs mt-1">Ukuran ideal 50 mm, maksimal 9cm x 5,5cm.</p>
+                            @error('foto_seller')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Upload KTP Seller (JPG/JPEG) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="file" name="foto_ktp" accept="image/jpeg"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                   required>
+                            @error('foto_ktp')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
