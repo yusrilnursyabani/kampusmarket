@@ -40,11 +40,7 @@
     <!-- Top Bar -->
     <div class="bg-kampus-darker text-white py-2">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center text-sm">
-                <div class="flex items-center space-x-4">
-                    <span><i class="fas fa-phone mr-1"></i> (021) 1234-5678</span>
-                    <span><i class="fas fa-envelope mr-1"></i> info@kampusmarket.com</span>
-                </div>
+            <div class="flex justify-end items-center text-sm">
                 <div class="flex items-center space-x-4">
                     <a href="{{ url('/seller') }}" target="_blank" class="hover:text-kampus-primary transition">
                         <i class="fas fa-store mr-1"></i> Panel Seller

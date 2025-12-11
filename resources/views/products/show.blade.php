@@ -40,10 +40,8 @@
                 <div class="flex items-center mb-4">
                     <div class="flex items-center text-yellow-500 text-xl">
                         @for($i = 1; $i <= 5; $i++)
-                            @if($i <= floor($averageRating))
+                            @if($i <= round($averageRating))
                                 <i class="fas fa-star"></i>
-                            @elseif($i - $averageRating < 1)
-                                <i class="fas fa-star-half-alt"></i>
                             @else
                                 <i class="far fa-star"></i>
                             @endif

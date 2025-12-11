@@ -9,10 +9,10 @@
         <!-- Reports Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- SRS-12: Laporan Stock -->
-            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow hover:shadow-lg transition-shadow border-2 border-blue-200">
                 <div class="p-6">
-                    <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-center justify-center w-12 h-12 bg-blue-500 rounded-lg mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
@@ -32,10 +32,10 @@
             </div>
 
             <!-- SRS-13: Laporan Rating -->
-            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow hover:shadow-lg transition-shadow border-2 border-yellow-200">
                 <div class="p-6">
-                    <div class="flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-lg mb-4">
-                        <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="flex items-center justify-center w-12 h-12 bg-yellow-500 rounded-lg mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                     </div>
@@ -55,10 +55,10 @@
             </div>
 
             <!-- SRS-14: Laporan Low Stock -->
-            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg shadow hover:shadow-lg transition-shadow border-2 border-red-200">
                 <div class="p-6">
-                    <div class="flex items-center justify-center w-12 h-12 bg-red-100 rounded-lg mb-4">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-center justify-center w-12 h-12 bg-red-500 rounded-lg mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                     </div>

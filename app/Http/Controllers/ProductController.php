@@ -180,12 +180,14 @@ class ProductController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        // Kirim email ucapan terima kasih
-        try {
-            Mail::to($validated['email_pengunjung'])->send(new ReviewThankYouMail($review));
-        } catch (\Exception $e) {
-            // Log error tapi tetap lanjut (jangan sampai gagal karena email)
-            Log::error('Failed to send review thank you email: ' . $e->getMessage());
+        // Kirim email ucapan terima kasih hanya untuk pengguna gmail.com (SRS-MartPlace-06)
+        if (str_ends_with(strtolower($validated['email_pengunjung']), '@gmail.com')) {
+            try {
+                Mail::to($validated['email_pengunjung'])->send(new ReviewThankYouMail($review));
+            } catch (\Exception $e) {
+                // Log error tapi tetap lanjut (jangan sampai gagal karena email)
+                Log::error('Failed to send review thank you email: ' . $e->getMessage());
+            }
         }
 
         return redirect()->route('products.show', $slug)
