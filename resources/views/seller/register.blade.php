@@ -270,19 +270,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Kode Pos -->
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Kode Pos (Opsional)
-                            </label>
-                            <input type="text" name="kode_pos" value="{{ old('kode_pos') }}" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                                   placeholder="Contoh: 12345">
-                            @error('kode_pos')
-                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
                     </div>
                 </div>
 

@@ -177,7 +177,7 @@
 
                         <!-- Quick Actions -->
                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <a href="{{ route('products.show', $product->id) }}" 
+                            <a href="{{ route('products.show', $product->slug) }}" 
                                class="px-4 py-2 bg-white text-kampus-dark font-semibold rounded-lg hover:bg-kampus-primary hover:text-white transition">
                                 <i class="fas fa-eye mr-2"></i>Lihat Detail
                             </a>
@@ -237,7 +237,7 @@
                         </div>
 
                         <!-- Action Button -->
-                        <a href="{{ route('products.show', $product->id) }}" 
+                        <a href="{{ route('products.show', $product->slug) }}" 
                            class="block w-full py-2.5 bg-kampus-primary text-white text-center font-semibold rounded-lg hover:bg-kampus-dark transition">
                             <i class="fas fa-shopping-cart mr-2"></i>Lihat Produk
                         </a>

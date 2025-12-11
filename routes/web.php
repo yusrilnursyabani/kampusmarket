@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerRegistrationController;
 use App\Http\Controllers\AdminReportController;
+use App\Http\Controllers\SellerReportController;
 
 // Homepage
 Route::get('/', function () {
@@ -23,9 +24,16 @@ Route::prefix('seller')->name('seller.')->group(function () {
     Route::post('/register', [SellerRegistrationController::class, 'register'])->name('register.submit');
 });
 
-// Admin PDF Reports (perlu login admin/web)
+// Admin PDF Reports (perlu login admin/web) - SRS-09, 10, 11
 Route::middleware(['auth'])->prefix('admin/reports')->name('admin.reports.')->group(function () {
     Route::get('/seller-accounts', [AdminReportController::class, 'sellerAccounts'])->name('sellers');
     Route::get('/stores-by-province', [AdminReportController::class, 'storesByProvince'])->name('stores');
     Route::get('/product-ratings', [AdminReportController::class, 'productRatings'])->name('products');
+});
+
+// Seller PDF Reports (perlu login seller) - SRS-12, 13, 14
+Route::middleware(['auth:seller'])->prefix('seller/reports')->name('seller.reports.')->group(function () {
+    Route::get('/stock', [SellerReportController::class, 'stockReport'])->name('stock');
+    Route::get('/rating', [SellerReportController::class, 'ratingReport'])->name('rating');
+    Route::get('/low-stock', [SellerReportController::class, 'lowStockReport'])->name('lowstock');
 });

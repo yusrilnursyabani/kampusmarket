@@ -55,7 +55,6 @@ class SellerRegistrationController extends Controller
             'nomor_ktp' => ['required', 'regex:/^[0-9]{16}$/', 'unique:sellers,nomor_ktp'],
             'foto_seller' => 'required|image|mimes:jpg,jpeg|max:2048',
             'foto_ktp' => 'required|image|mimes:jpg,jpeg|max:2048',
-            'kode_pos' => 'nullable|string|max:10',
         ], [
             'nama_toko.required' => 'Nama toko wajib diisi',
             'singkatan_toko.required' => 'Singkatan toko wajib diisi',
@@ -122,7 +121,6 @@ class SellerRegistrationController extends Controller
             'rw' => $validated['rw'],
             'kelurahan' => $validated['kelurahan'],
             'kecamatan' => $validated['kecamatan'],
-            'kode_pos' => $validated['kode_pos'] ?? null,
             'nomor_ktp' => $validated['nomor_ktp'],
             'foto_seller' => $fotoSellerPath,
             'foto_ktp' => $fotoKtpPath,
@@ -130,26 +128,10 @@ class SellerRegistrationController extends Controller
             'is_active' => false,
         ]);
 
-        // Kirim email notifikasi ke admin
-        try {
-            Mail::raw(
-                "Seller baru telah mendaftar!\n\n" .
-                "Nama Toko: {$seller->nama_toko}\n" .
-                "PIC: {$seller->nama_pic}\n" .
-                "Email: {$seller->email_pic}\n" .
-                "Lokasi: {$seller->kota_kabupaten}, {$seller->provinsi}\n\n" .
-                "Silakan login ke admin panel untuk verifikasi:\n" .
-                url('/admin/sellers/' . $seller->id),
-                function($message) {
-                    $message->to(config('mail.from.address')) // Email admin
-                            ->subject('Seller Baru Menunggu Verifikasi - KampusMarket');
-                }
-            );
-        } catch (\Exception $e) {
-            Log::error('Gagal kirim email notifikasi seller baru: ' . $e->getMessage());
-        }
+        // Email notifikasi otomatis dikirim ke seller via SellerObserver
+        // Lihat: app/Observers/SellerObserver.php -> created()
 
         return redirect()->route('seller.register')
-                         ->with('success', 'Registrasi berhasil! Silakan tunggu verifikasi dari Admin. Kami akan mengirim email konfirmasi setelah akun Anda diverifikasi.');
+                         ->with('success', 'Registrasi berhasil! Kami telah mengirim email konfirmasi ke ' . $seller->email_pic . '. Silakan cek inbox/spam Anda dan tunggu proses verifikasi dari tim kami (1-3 hari kerja).');
     }
 }

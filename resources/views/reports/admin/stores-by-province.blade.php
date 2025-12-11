@@ -2,78 +2,56 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Toko per Provinsi</title>
+    <title>(SRS-MartPlace-10) Laporan Daftar Toko Berdasarkan Lokasi Propinsi</title>
     <style>
-        @page { margin: 30px; }
-        body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 12px; color: #1f2933; }
-        h1 { font-size: 20px; margin-bottom: 4px; }
-        h2 { font-size: 14px; margin-top: 24px; margin-bottom: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
-        th { background: #f3f4f6; font-weight: 600; }
-        .meta { font-size: 11px; color: #6b7280; }
-        .badge { padding: 3px 7px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-        .badge-success { background: #dcfce7; color: #15803d; }
-        .badge-danger { background: #fee2e2; color: #b91c1c; }
+        @page { margin: 25px; }
+        body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 11px; color: #000; }
+        h1 { font-size: 16px; margin-bottom: 2px; text-align: center; }
+        h2 { font-size: 12px; margin: 0 0 15px 0; color: #666; text-align: center; font-weight: normal; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; }
+        th { background: #f0f0f0; font-weight: 600; text-align: center; }
+        td { vertical-align: top; }
+        .center { text-align: center; }
     </style>
 </head>
 <body>
     <header>
-        <h1>KampusMarket &mdash; Laporan Persebaran Toko</h1>
-        <p class="meta">Dibuat pada {{ $generatedAt->format('d F Y H:i') }}</p>
+        <h1>(SRS-MartPlace-10)</h1>
+        <h1>Laporan Daftar Toko Berdasarkan Lokasi Propinsi</h1>
+        <h2>Tanggal dibuat: {{ $generatedAt->format('d-m-Y') }} oleh {{ $generatedBy }}</h2>
     </header>
 
-    <h2>Ringkasan per Provinsi</h2>
     <table>
         <thead>
             <tr>
-                <th>Provinsi</th>
-                <th>Total Toko</th>
-                <th>Toko Aktif</th>
-                <th>Toko Tidak Aktif</th>
+                <th width="5%">No</th>
+                <th width="35%">Nama Toko</th>
+                <th width="30%">Nama PIC</th>
+                <th width="30%">Propinsi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($provinceSummaries as $summary)
+            @php $counter = 1; @endphp
+            @forelse($sellers as $provinsi => $tokoList)
+                @foreach($tokoList as $seller)
+                    <tr>
+                        <td class="center">{{ $counter++ }}</td>
+                        <td>{{ $seller->nama_toko }}</td>
+                        <td>{{ $seller->nama_pic }}</td>
+                        <td>{{ $provinsi }}</td>
+                    </tr>
+                @endforeach
+            @empty
                 <tr>
-                    <td>{{ $summary->provinsi ?? '-' }}</td>
-                    <td>{{ $summary->total_toko }}</td>
-                    <td>{{ $summary->toko_aktif }}</td>
-                    <td>{{ $summary->toko_tidak_aktif }}</td>
+                    <td colspan="4" class="center">Tidak ada data</td>
                 </tr>
-            @endforeach
+            @endforelse
         </tbody>
     </table>
 
-    <h2>Detail Toko</h2>
-    @foreach($groupedSellers as $province => $sellers)
-        <table style="margin-top: 16px;">
-            <thead>
-                <tr>
-                    <th colspan="4">Provinsi: {{ $province ?: '-' }} ({{ $sellers->count() }} toko)</th>
-                </tr>
-                <tr>
-                    <th>Nama Toko</th>
-                    <th>Status</th>
-                    <th>Lokasi</th>
-                    <th>PIC</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($sellers as $seller)
-                    <tr>
-                        <td>{{ $seller->nama_toko }}</td>
-                        <td>
-                            <span class="badge {{ $seller->is_active ? 'badge-success' : 'badge-danger' }}">
-                                {{ $seller->is_active ? 'Aktif' : 'Tidak Aktif' }}
-                            </span>
-                        </td>
-                        <td>{{ $seller->kota_kabupaten }}</td>
-                        <td>{{ $seller->nama_pic }} &bull; {{ $seller->no_hp_pic }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endforeach
+    <p style="margin-top: 15px; font-size: 10px; color: #666;">
+        ***) urutkan berdasarkan propinsi
+    </p>
 </body>
 </html>

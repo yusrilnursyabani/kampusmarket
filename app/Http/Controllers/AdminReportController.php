@@ -4,47 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Seller;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class AdminReportController extends Controller
 {
+    /**
+     * SRS-09: Laporan daftar akun penjual berdasarkan status (aktif/tidak aktif)
+     */
     public function sellerAccounts()
     {
-        $sellers = Seller::orderBy('created_at', 'desc')->get();
+        $sellers = Seller::with('user')
+            ->orderBy('is_active', 'desc')
+            ->orderBy('nama_toko', 'asc')
+            ->get();
 
         $pdf = Pdf::loadView('reports.admin.seller-accounts', [
             'generatedAt' => now(),
+            'generatedBy' => Auth::user()->name ?? 'Admin',
             'sellers' => $sellers,
-        ])->setPaper('a4', 'landscape');
+        ])->setPaper('a4', 'portrait');
 
-        return $pdf->download('laporan-akun-penjual.pdf');
+        return $pdf->download('SRS-MartPlace-09_Laporan-Akun-Penjual-' . date('Ymd') . '.pdf');
     }
 
+    /**
+     * SRS-10: Laporan daftar toko berdasarkan lokasi propinsi
+     */
     public function storesByProvince()
     {
-        $provinceSummaries = Seller::select('provinsi')
-            ->selectRaw('COUNT(*) as total_toko')
-            ->selectRaw('SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as toko_aktif')
-            ->selectRaw('SUM(CASE WHEN is_active = 0 THEN 1 ELSE 0 END) as toko_tidak_aktif')
-            ->whereNotNull('provinsi')
-            ->groupBy('provinsi')
-            ->orderBy('provinsi')
-            ->get();
-
-        $groupedSellers = Seller::orderBy('provinsi')
-            ->orderBy('nama_toko')
+        $sellers = Seller::orderBy('provinsi', 'asc')
+            ->orderBy('nama_toko', 'asc')
             ->get()
             ->groupBy('provinsi');
 
         $pdf = Pdf::loadView('reports.admin.stores-by-province', [
             'generatedAt' => now(),
-            'provinceSummaries' => $provinceSummaries,
-            'groupedSellers' => $groupedSellers,
+            'generatedBy' => Auth::user()->name ?? 'Admin',
+            'sellers' => $sellers,
         ])->setPaper('a4', 'portrait');
 
-        return $pdf->download('laporan-toko-per-provinsi.pdf');
+        return $pdf->download('SRS-MartPlace-10_Laporan-Toko-Per-Provinsi-' . date('Ymd') . '.pdf');
     }
 
+    /**
+     * SRS-11: Laporan daftar produk berdasarkan rating (menurun)
+     */
     public function productRatings()
     {
         $products = Product::with([
@@ -53,26 +59,28 @@ class AdminReportController extends Controller
                 'reviews' => fn ($query) => $query->where('is_approved', true),
             ])
             ->where('is_active', true)
-            ->orderBy('nama_produk')
             ->get()
             ->map(function ($product) {
-                $average = round($product->reviews->avg('rating') ?? 0, 2);
+                $average = $product->reviews->avg('rating') ?? 0;
 
                 return [
                     'nama_produk' => $product->nama_produk,
-                    'nama_toko' => optional($product->seller)->nama_toko ?? '-',
                     'kategori' => optional($product->category)->nama_kategori ?? '-',
-                    'stok' => $product->stok,
-                    'rata_rating' => $average,
-                    'total_review' => $product->reviews->count(),
+                    'harga' => $product->harga,
+                    'rating' => number_format($average, 2),
+                    'nama_toko' => optional($product->seller)->nama_toko ?? '-',
+                    'provinsi' => optional($product->seller)->provinsi ?? '-',
                 ];
-            });
+            })
+            ->sortByDesc('rating')
+            ->values();
 
         $pdf = Pdf::loadView('reports.admin.product-ratings', [
             'generatedAt' => now(),
+            'generatedBy' => Auth::user()->name ?? 'Admin',
             'products' => $products,
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->download('laporan-produk-rating.pdf');
+        return $pdf->download('SRS-MartPlace-11_Laporan-Produk-Rating-' . date('Ymd') . '.pdf');
     }
 }

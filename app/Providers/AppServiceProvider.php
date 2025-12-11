@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Seller;
+use App\Observers\SellerObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register Seller Observer untuk email notifikasi verifikasi
+        Seller::observe(SellerObserver::class);
     }
 }

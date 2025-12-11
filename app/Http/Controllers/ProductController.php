@@ -87,11 +87,15 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
+        Log::info('ProductController@show dipanggil', ['slug' => $slug]);
+        
         $product = Product::with(['seller', 'category', 'reviews' => function ($query) {
             $query->where('is_approved', true)
                 ->where('is_spam', false)
                 ->orderBy('created_at', 'desc');
         }])->where('slug', $slug)->firstOrFail();
+        
+        Log::info('Product ditemukan', ['product_id' => $product->id, 'nama' => $product->nama_produk]);
 
         // Increment views
         $product->incrementViews();
