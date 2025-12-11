@@ -36,7 +36,7 @@
             @forelse($sellers as $seller)
                 <tr>
                     <td class="center">{{ $loop->iteration }}</td>
-                    <td>{{ optional($seller->user)->name ?? $seller->email_pic }}</td>
+                    <td>{{ $seller->email_pic }}</td>
                     <td>{{ $seller->nama_pic }}</td>
                     <td>{{ $seller->nama_toko }}</td>
                     <td class="center">{{ $seller->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>

@@ -40,6 +40,7 @@ class SellerPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Seller/Pages'), for: 'App\\Filament\\Seller\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                \App\Filament\Seller\Pages\Reports::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Seller/Widgets'), for: 'App\\Filament\\Seller\\Widgets')
             ->widgets([

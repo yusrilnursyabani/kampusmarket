@@ -15,8 +15,7 @@ class AdminReportController extends Controller
      */
     public function sellerAccounts()
     {
-        $sellers = Seller::with('user')
-            ->orderBy('is_active', 'desc')
+        $sellers = Seller::orderBy('is_active', 'desc')
             ->orderBy('nama_toko', 'asc')
             ->get();
 

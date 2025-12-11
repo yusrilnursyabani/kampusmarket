@@ -102,19 +102,6 @@
                             class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-kampus-primary focus:border-kampus-primary transition">
                     </div>
 
-                    <!-- Sort -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-3">
-                            <i class="fas fa-sort text-kampus-primary mr-2"></i>Urutkan
-                        </label>
-                        <select name="sort" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-kampus-primary focus:border-kampus-primary transition">
-                            <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
-                            <option value="popular" {{ request('sort') == 'popular' ? 'selected' : '' }}>Terpopuler</option>
-                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Harga Terendah</option>
-                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Harga Tertinggi</option>
-                        </select>
-                    </div>
-
                     <!-- Action Buttons -->
                     <div class="flex gap-3 pt-4 border-t">
                         <button type="submit" class="flex-1 py-2.5 bg-kampus-primary text-white font-semibold rounded-lg hover:bg-kampus-dark transition shadow-lg">
@@ -199,7 +186,7 @@
 
                                 <!-- Quick View -->
                                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <a href="{{ route('products.show', $product->id) }}" 
+                                    <a href="{{ route('products.show', $product->slug) }}" 
                                        class="px-4 py-2 bg-white text-kampus-dark font-semibold rounded-lg hover:bg-kampus-primary hover:text-white transition">
                                         <i class="fas fa-eye mr-2"></i>Lihat
                                     </a>
@@ -252,7 +239,7 @@
                                 </div>
 
                                 <!-- Action Button -->
-                                <a href="{{ route('products.show', $product->id) }}" 
+                                <a href="{{ route('products.show', $product->slug) }}" 
                                    class="block w-full py-2.5 bg-kampus-primary text-white text-center font-semibold rounded-lg hover:bg-kampus-dark transition text-sm">
                                     <i class="fas fa-shopping-cart mr-2"></i>Lihat Produk
                                 </a>
