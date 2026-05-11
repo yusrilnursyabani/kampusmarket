@@ -1,2 +1,6 @@
 *
 !.gitignore
+
+# Allow committing sample catalog product images
+!products/
+!products/**

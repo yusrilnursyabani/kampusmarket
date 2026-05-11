@@ -16,7 +16,7 @@
         <div class="lg:col-span-2">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 @if($product->gambar_utama)
-                    <img src="{{ Storage::url($product->gambar_utama) }}" alt="{{ $product->nama_produk }}" 
+                    <img src="{{ Storage::disk('public')->url($product->gambar_utama) }}" alt="{{ $product->nama_produk }}" 
                         class="w-full h-96 object-cover">
                 @else
                     <div class="w-full h-96 bg-gray-200 flex items-center justify-center">

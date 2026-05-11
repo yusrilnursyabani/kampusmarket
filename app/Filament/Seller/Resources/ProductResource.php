@@ -91,6 +91,7 @@ class ProductResource extends Resource
                         Forms\Components\FileUpload::make('gambar_utama')
                             ->label('Gambar Utama')
                             ->image()
+                            ->disk('public')
                             ->directory('products')
                             ->maxSize(2048)
                             ->imageEditor()
@@ -99,6 +100,7 @@ class ProductResource extends Resource
                         Forms\Components\FileUpload::make('galeri_gambar')
                             ->label('Galeri Gambar (Maksimal 5)')
                             ->image()
+                            ->disk('public')
                             ->directory('products/gallery')
                             ->maxSize(2048)
                             ->maxFiles(5)
@@ -125,6 +127,7 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('gambar_utama')
                     ->label('Gambar')
+                    ->disk('public')
                     ->square()
                     ->defaultImageUrl(fn () => 'https://ui-avatars.com/api/?name=Produk'),
                 
