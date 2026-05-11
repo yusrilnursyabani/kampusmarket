@@ -17,7 +17,7 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 @if($product->gambar_utama)
                     <img src="{{ Storage::disk('public')->url($product->gambar_utama) }}" alt="{{ $product->nama_produk }}" 
-                        class="w-full h-96 object-cover">
+                        class="w-full h-96 object-contain bg-white">
                 @else
                     <div class="w-full h-96 bg-gray-200 flex items-center justify-center">
                         <i class="fas fa-image text-gray-400 text-6xl"></i>

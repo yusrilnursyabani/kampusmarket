@@ -152,10 +152,10 @@
                 <div class="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                     <!-- Product Image -->
                     <div class="relative overflow-hidden bg-gray-100 aspect-square">
-                        @if($product->gambar_produk)
-                            <img src="{{ Storage::url($product->gambar_produk) }}" 
+                        @if($product->gambar_utama)
+                            <img src="{{ Storage::disk('public')->url($product->gambar_utama) }}" 
                                  alt="{{ $product->nama_produk }}"
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                 class="w-full h-full object-contain transition-transform duration-300">
                         @else
                             <div class="w-full h-full flex items-center justify-center">
                                 <i class="fas fa-image text-gray-400 text-4xl"></i>
