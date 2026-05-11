@@ -8,7 +8,7 @@ use App\Http\Controllers\SellerReportController;
 
 // Homepage
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('products.index');
 });
 
 // Routes Frontend Publik (tanpa autentikasi)

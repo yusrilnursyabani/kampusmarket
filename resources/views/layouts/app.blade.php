@@ -170,7 +170,7 @@
     <!-- Footer -->
     <footer class="bg-kampus-darker text-white mt-16">
         <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- About -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center mb-4">
@@ -182,23 +182,9 @@
                         </div>
                     </div>
                     <p class="text-gray-300 mb-4 leading-relaxed">
-                        Platform marketplace terpercaya untuk mahasiswa dan pelaku UMKM kampus di seluruh Indonesia. 
+                        Platform marketplace terpercaya untuk mahasiswa dan pelaku UMKM kampus di seluruh Indonesia.
                         Menghubungkan seller dengan pembeli dalam satu ekosistem digital yang aman dan terpercaya.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-kampus-dark rounded-full flex items-center justify-center hover:bg-kampus-primary transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-kampus-dark rounded-full flex items-center justify-center hover:bg-kampus-primary transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-kampus-dark rounded-full flex items-center justify-center hover:bg-kampus-primary transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-kampus-dark rounded-full flex items-center justify-center hover:bg-kampus-primary transition">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <!-- Quick Links -->
@@ -217,28 +203,6 @@
                     </ul>
                 </div>
 
-                <!-- Contact -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-kampus-primary">Hubungi Kami</h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mr-3 mt-1 text-kampus-primary"></i>
-                            <span>Jl. Pendidikan No. 123<br>Jakarta, Indonesia</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-3 text-kampus-primary"></i>
-                            <span>(021) 1234-5678</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-kampus-primary"></i>
-                            <span>info@kampusmarket.com</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock mr-3 text-kampus-primary"></i>
-                            <span>Senin - Jumat, 09:00 - 17:00</span>
-                        </li>
-                    </ul>
-                </div>
             </div>
 
             <div class="border-t border-kampus-dark mt-8 pt-8">
