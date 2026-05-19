@@ -89,22 +89,51 @@
    >
    > **Lihat file `DATABASE_SETUP.md` untuk detail lengkap!**
 
-6. **Build Assets**
+6. **Buat Storage Symlink (WAJIB untuk gambar produk)**
+   ```bash
+   php artisan storage:link
+   ```
+   > Catatan: file upload gambar disimpan di `storage/app/public` dan umumnya **tidak ikut ter-commit ke Git**.
+   > Jadi kalau baru clone/pull, gambar produk yang pernah kamu upload di laptopmu tidak otomatis ada di laptop teman.
+
+7. **Build Assets**
    ```bash
    npm run build
    # atau untuk development:
    npm run dev
    ```
 
-7. **Jalankan Server**
+8. **Jalankan Server**
    ```bash
    php artisan serve
    ```
 
-8. **Akses Aplikasi**
+9. **Akses Aplikasi**
    - Frontend: `http://localhost:8000`
    - Admin Panel: `http://localhost:8000/admin`
    - Seller Panel: `http://localhost:8000/seller`
+
+## 🔄 Update Setelah Pull (Tanpa Ribet)
+
+Kalau habis `git pull` dan ingin memastikan dependency/migrasi/storage link/cache sudah beres, jalankan satu perintah:
+
+```bash
+composer run sync
+```
+
+Atau di Windows kamu bisa jalankan helper script PowerShell:
+
+```powershell
+./scripts/sync.ps1
+```
+
+> Catatan: ini otomatis mengurus `composer install`, `npm install`, `php artisan migrate`, `php artisan storage:link`, dan clear cache.
+
+## 🖼️ Catatan Tentang Gambar Produk
+
+- Upload gambar sudah otomatis terlihat **di instance aplikasi yang sama**.
+- Kalau kamu dan temanmu jalanin aplikasi di laptop masing-masing, file upload (di `storage/app/public`) **tidak ikut Git**, jadi gambar tidak otomatis ikut tersinkron.
+- Supaya gambar bisa otomatis terlihat lintas laptop, kalian perlu **storage bersama** (contoh: S3/MinIO) atau pakai satu environment dev yang sama (mis. satu server).
 
 ## 🔑 Default Credentials
 
@@ -191,6 +220,11 @@ php artisan test
 ```bash
 php artisan optimize:clear
 ```
+
+### Troubleshooting Gambar Produk Tidak Muncul
+- Pastikan `public/storage` sudah ada: jalankan `php artisan storage:link`.
+- Pastikan file gambarnya benar-benar ada di `storage/app/public/...`.
+- Pastikan `.env` teman punya `APP_URL` yang sesuai dengan domain/vhost yang dipakai (lalu jalankan `php artisan optimize:clear`).
 
 ### Generate Filament Resources
 ```bash

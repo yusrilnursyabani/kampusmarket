@@ -21,13 +21,15 @@
                     <div class="text-xs text-gray-500 mb-4">
                         <span class="font-semibold">SRS-MartPlace-09</span>
                     </div>
-                    <a href="{{ route('admin.reports.sellers') }}" 
-                       class="inline-flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
+                    <x-filament::button
+                        tag="a"
+                        href="{{ route('admin.reports.sellers') }}"
+                        icon="heroicon-o-arrow-down-tray"
+                        class="w-full"
+                        color="success"
+                    >
                         Download PDF
-                    </a>
+                    </x-filament::button>
                 </div>
             </div>
 
@@ -45,13 +47,15 @@
                     <div class="text-xs text-gray-500 mb-4">
                         <span class="font-semibold">SRS-MartPlace-10</span>
                     </div>
-                    <a href="{{ route('admin.reports.stores') }}" 
-                       class="inline-flex items-center justify-center w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
+                    <x-filament::button
+                        tag="a"
+                        href="{{ route('admin.reports.stores') }}"
+                        icon="heroicon-o-arrow-down-tray"
+                        class="w-full"
+                        color="warning"
+                    >
                         Download PDF
-                    </a>
+                    </x-filament::button>
                 </div>
             </div>
 
@@ -68,13 +72,15 @@
                     <div class="text-xs text-gray-500 mb-4">
                         <span class="font-semibold">SRS-MartPlace-11</span>
                     </div>
-                    <a href="{{ route('admin.reports.products') }}" 
-                       class="inline-flex items-center justify-center w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
+                    <x-filament::button
+                        tag="a"
+                        href="{{ route('admin.reports.products') }}"
+                        icon="heroicon-o-arrow-down-tray"
+                        class="w-full"
+                        color="success"
+                    >
                         Download PDF
-                    </a>
+                    </x-filament::button>
                 </div>
             </div>
         </div>

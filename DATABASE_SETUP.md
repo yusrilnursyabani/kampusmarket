@@ -54,6 +54,15 @@ php artisan migrate
 php artisan db:seed
 ```
 
+Setelah itu, **buat storage symlink** agar file gambar di disk `public` bisa diakses dari browser:
+
+```bash
+php artisan storage:link
+```
+
+> Penting: file gambar hasil upload tersimpan di `storage/app/public` dan biasanya **tidak ikut di-push/pull dari Git**.
+> Jadi kalau kamu melihat gambar di laptop A tapi tidak di laptop B, kemungkinan besar file gambarnya belum ada di laptop B.
+
 ### ✅ Data yang Akan Dibuat:
 
 **1. Admin User (1 akun)**
@@ -163,6 +172,13 @@ php artisan migrate:fresh --seed
 2. Clear cache: `php artisan optimize:clear`
 3. Cek database: Pastikan ada data di tabel `products`
 
+### Gambar produk tidak muncul (padahal produk ada)
+**Cek cepat:**
+1. Jalankan `php artisan storage:link`
+2. Pastikan folder `public/storage` ada (link ke `storage/app/public`)
+3. Pastikan file gambar ada di `storage/app/public/products/...`
+4. Pastikan `.env` punya `APP_URL` yang sesuai domain lokal kamu, lalu jalankan `php artisan optimize:clear`
+
 ---
 
 ## 📧 Email Configuration (Opsional)
@@ -198,6 +214,28 @@ Setelah setup, pastikan:
 - [ ] Seller bisa login ke `/seller`
 - [ ] Frontend menampilkan 13 produk
 - [ ] Filter & search berfungsi
+
+---
+
+## 🔄 Kalau Habis `git pull`
+
+Kalau habis pull dan ingin semua dependency/migrasi/cache/storage link ikut rapi, jalankan:
+
+```bash
+composer run sync
+```
+
+Atau khusus Windows:
+
+```powershell
+./scripts/sync.ps1
+```
+
+## 🖼️ Tentang Gambar yang Tidak Ikut Pull
+
+- File gambar hasil upload tersimpan di `storage/app/public`.
+- Folder itu biasanya tidak ikut Git, jadi gambar yang kamu upload di laptopmu tidak otomatis ada di laptop teman.
+- Kalau mau otomatis sinkron lintas laptop, gunakan storage bersama (mis. S3/MinIO) atau jalankan aplikasi di satu server yang sama.
 - [ ] Detail produk menampilkan review
 
 ---
